@@ -5,7 +5,7 @@ A new Flutter project.
 To run without null safety
 
 ```
-dart run -d chrome --no-sound-null-safety
+flutter run -d chrome --no-sound-null-safety
 ```
 
 ## References
