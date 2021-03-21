@@ -20,3 +20,9 @@ class NavDrawerOpen extends NavBlocEvent {
   final int pageNumber;
   const NavDrawerOpen(this.isDrawerOpen, this.pageNumber);
 }
+
+class NavSetPageNumber extends NavBlocEvent {
+  final int isDrawerOpen;
+  final int pageNumber;
+  const NavSetPageNumber(this.isDrawerOpen, this.pageNumber);
+}

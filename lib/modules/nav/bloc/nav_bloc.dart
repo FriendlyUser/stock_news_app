@@ -18,6 +18,8 @@ class NavBloc extends Bloc<NavBlocEvent, NavBlocState> {
       yield NavBlocClose(0, event.pageNumber);
     } else if (event is NavDrawerOpen) {
       yield NavBlocOpen(1, event.pageNumber);
+    } else if (event is NavSetPageNumber) {
+      yield NavSetPage(event.isDrawerOpen, event.pageNumber);
     }
   }
 }

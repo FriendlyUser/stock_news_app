@@ -26,3 +26,7 @@ class NavBlocOpen extends NavBlocState {
 
   NavBlocOpen(int isDrawerOpen, int currentPage): super(0, currentPage);
 }
+
+class NavSetPage extends NavBlocState {
+  NavSetPage(int isDrawerOpen, int currentPage): super(isDrawerOpen, currentPage);
+}

@@ -4,6 +4,7 @@ import './core/nav/bloc/sidebar_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stock_news_app/utils/simple_bloc_observer.dart';
 import 'package:stock_news_app/modules/nav/bloc/nav_bloc.dart';
+import 'package:stock_news_app/widgets/FirstScreen.dart';
 import 'package:stock_news_app/widgets/CustomDrawer.dart' show CustomDrawer;
 void main() {
   runApp(MyApp());
@@ -18,11 +19,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Flutter Demo',
+        title: 'News App',
         theme: ThemeData(
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
+        // can switch to multi bloc provider  
+        // could just use cubit for navigation
         home: BlocProvider(
           create: (_) => NavBloc(),
           child: MyHomePage(),
@@ -38,7 +41,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   // FSBStatus drawerStatus = FSBStatus.FSB_OPEN;
   PageController _pageController = PageController(initialPage: 0);
-  var selectedPage = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -46,8 +48,6 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Scaffold(
         body: BlocBuilder<NavBloc, NavBlocState>(
           buildWhen: (previousState, state) {
-            print(previousState);
-            print(state);
             return state.isDrawerOpen != previousState.isDrawerOpen;
           },
           builder: (context, state) {
@@ -58,7 +58,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 closeDrawer: () {
                   setState(() {
                     NavBloc navbloc = BlocProvider.of<NavBloc>(context);
-                    // context.read<NavbarCubit>().closeDrawer();
                     navbloc.add(NavDrawerClose(0, state.currentPage));
                   });
                 },
@@ -98,34 +97,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 onPressed: () {
                   setState(() {
                     NavBloc navBloc = BlocProvider.of<NavBloc>(context);
-                    print(state.isDrawerOpen);
-                    print(FSBStatus.values[state.isDrawerOpen]);
                     if (FSBStatus.values[state.isDrawerOpen] == FSBStatus.FSB_OPEN) 
                     {
-                      print("CLOSING");
                       navBloc.add(NavDrawerClose(1, state.currentPage));
                     } else {
-                      print("OPENING");
                       navBloc.add(NavDrawerOpen(0, state.currentPage));
                     } 
                   });
                 });
           },
-        ),
-      ),
-    );
-  }
-}
-
-class FirstScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.black.withAlpha(200),
-      child: Center(
-        child: Text(
-          "Click on FAB to Open Drawer",
-          style: TextStyle(fontSize: 20, color: Colors.white),
         ),
       ),
     );
